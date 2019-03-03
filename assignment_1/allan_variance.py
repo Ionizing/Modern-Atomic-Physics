@@ -29,6 +29,7 @@ def calc_deviation(pavgs : list) :
     return np.sqrt(sum_of_dy2 / (2*len(pavgs) - 2))
 
 def main() :
+    f = 3e8 / 730e-9 # the frequency of 730nm light
     timet, fract_data = read_data(r'./Ca_clock_transition_data.xls')
     timet.pop()
     fract_data.pop()
@@ -39,7 +40,7 @@ def main() :
     for i in range(len(fract_data) // 2):
         pavgs = partial_average(fract_data, i + 1)
         devia = calc_deviation (pavgs)
-        y.append(devia)
+        y.append(devia / f)
 
     plt.loglog(x, y)
     plt.show()
